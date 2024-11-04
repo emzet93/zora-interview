@@ -34,6 +34,7 @@ export function ImageThumbnail({ image }: ImageThumbnailProps) {
         source={image.urls.thumb}
         contentFit="cover"
         recyclingKey={image.id}
+        transition={100}
       />
     </Pressable>
   );
