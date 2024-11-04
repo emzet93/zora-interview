@@ -3,6 +3,7 @@ export interface Theme {
     background: string;
     backgroundLight: string;
     text: string;
+    textPlaceholder: string;
   };
   spacing: {
     xs: number;
@@ -16,13 +17,17 @@ export interface Theme {
     m: number;
     l: number;
   };
+  card: {
+    borderRadius: number;
+  };
 }
 
 export const theme: Theme = {
   colors: {
     background: "#000000",
-    backgroundLight: "#3b3b3b",
+    backgroundLight: "#262626",
     text: "#FFFFFF",
+    textPlaceholder: "rgba(255,255,255,0.5)",
   },
   spacing: {
     xs: 8,
@@ -35,5 +40,8 @@ export const theme: Theme = {
     s: 14,
     m: 18,
     l: 24,
+  },
+  card: {
+    borderRadius: 8,
   },
 };

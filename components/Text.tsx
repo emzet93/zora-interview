@@ -6,6 +6,7 @@ export type TextProps = RNTextProps & {
   weight?: "regular" | "semibold" | "bold";
   color?: keyof Theme["colors"];
   secondary?: boolean;
+  align?: "left" | "right" | "center";
 };
 
 export function Text({
@@ -14,6 +15,7 @@ export function Text({
   weight = "regular",
   secondary = false,
   color = "text",
+  align,
   ...rest
 }: TextProps) {
   return (
@@ -23,6 +25,7 @@ export function Text({
           color: theme.colors[color],
           fontSize: theme.font[size],
           fontWeight: weight,
+          textAlign: align,
         },
         secondary && { opacity: 0.7 },
         style,
