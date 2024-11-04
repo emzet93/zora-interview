@@ -44,4 +44,4 @@ export const theme: Theme = {
   card: {
     borderRadius: 8,
   },
-};
+} as const;

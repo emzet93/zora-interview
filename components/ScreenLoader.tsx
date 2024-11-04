@@ -1,14 +1,11 @@
-import { StyleSheet } from "react-native";
+import { ActivityIndicator, StyleSheet } from "react-native";
 import { theme } from "@/constants/theme";
-import { Text } from "@/components/Text";
 import Animated, { FadeIn } from "react-native-reanimated";
 
 export function ScreenLoader() {
   return (
     <Animated.View entering={FadeIn} style={styles.container}>
-      <Text weight="bold" size="l">
-        Loading...
-      </Text>
+      <ActivityIndicator color={theme.colors.textPlaceholder} size="large" />
     </Animated.View>
   );
 }

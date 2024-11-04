@@ -1,5 +1,10 @@
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import {
+  useInfiniteQuery,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { fetchImageDetails, fetchSearchImages } from "@/services/unsplash";
+import { UnsplashImage } from "@/types/image";
 
 export const imageQueryKeys = {
   all: ["images"] as const,
@@ -30,3 +35,11 @@ export const useImageDetailsQuery = (id: string) =>
     queryFn: () => fetchImageDetails(id),
     staleTime: 1000 * 30,
   });
+
+export const usePrecacheImage = () => {
+  const queryClient = useQueryClient();
+
+  return (image: UnsplashImage) => {
+    queryClient.setQueryData(imageQueryKeys.details(image.id), image);
+  };
+};
