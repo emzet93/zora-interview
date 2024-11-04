@@ -14,13 +14,15 @@ import { SearchBox } from "@/components/SearchBox";
 import { useMemo, useState } from "react";
 import { MasonryFlashList } from "@shopify/flash-list";
 import { ImageThumbnail } from "@/components/ImageThumbnail";
+import { useDebounce } from "use-debounce";
 
 export default function Search() {
-  const [search, setSearch] = useState("");
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [search, setSearch] = useState("");
+  const [debouncedSearch] = useDebounce(search, 500);
 
-  const { data, isPending, isFetchingNextPage, fetchNextPage, refetch } =
-    useSearchImagesQuery(search);
+  const { data, error, isPending, isFetchingNextPage, fetchNextPage, refetch } =
+    useSearchImagesQuery(debouncedSearch);
 
   const flatData = useMemo(
     () => data?.pages.flatMap((page) => page.results),
@@ -37,15 +39,12 @@ export default function Search() {
   };
 
   return (
-    <KeyboardAvoidingView
-      style={{ flex: 1 }}
-      contentContainerStyle={{ flex: 1 }}
-    >
+    <KeyboardAvoidingView style={styles.keyboardView} behavior="padding">
       <View style={styles.container}>
         <SearchBox value={search} setValue={setSearch} />
         <View style={styles.content}>
           {(() => {
-            if (search === "") {
+            if (debouncedSearch === "") {
               return (
                 <View style={styles.searchEmpty}>
                   <Text>Type something</Text>
@@ -76,13 +75,7 @@ export default function Search() {
                     />
                   }
                   ListFooterComponent={
-                    <View
-                      style={{
-                        height: 50,
-                        justifyContent: "center",
-                        alignItems: "center",
-                      }}
-                    >
+                    <View style={styles.nextPageLoader}>
                       {isFetchingNextPage && (
                         <ActivityIndicator
                           color={theme.colors.textPlaceholder}
@@ -95,6 +88,7 @@ export default function Search() {
                   renderItem={({ item: image }) => (
                     <ImageThumbnail image={image} />
                   )}
+                  keyboardDismissMode={"on-drag"}
                 />
               );
             }
@@ -116,6 +110,9 @@ export default function Search() {
 }
 
 const styles = StyleSheet.create({
+  keyboardView: {
+    flex: 1,
+  },
   container: {
     flex: 1,
     backgroundColor: theme.colors.background,
@@ -125,6 +122,11 @@ const styles = StyleSheet.create({
   },
   searchEmpty: {
     flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  nextPageLoader: {
+    height: theme.spacing.l * 2,
     justifyContent: "center",
     alignItems: "center",
   },

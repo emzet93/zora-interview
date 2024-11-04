@@ -18,7 +18,7 @@ export default function ImageScreen() {
   if (image) {
     return (
       <View style={styles.container}>
-        <View style={[styles.header, { paddingTop: safeAreaInsets.top }]}>
+        <View style={{ paddingTop: safeAreaInsets.top }}>
           <Pressable onPress={() => router.back()} style={styles.backButton}>
             <Feather
               name="chevron-left"
@@ -65,7 +65,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: theme.colors.background,
   },
-  header: {},
   backButton: {
     padding: theme.spacing.xs,
   },

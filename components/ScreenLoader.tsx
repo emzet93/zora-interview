@@ -5,7 +5,7 @@ import Animated, { FadeIn } from "react-native-reanimated";
 export function ScreenLoader() {
   return (
     <Animated.View entering={FadeIn} style={styles.container}>
-      <ActivityIndicator color={theme.colors.textPlaceholder} size="large" />
+      <ActivityIndicator color={theme.colors.textPlaceholder} />
     </Animated.View>
   );
 }
