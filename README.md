@@ -1,50 +1,16 @@
-# Welcome to your Expo app 👋
+# Zora Interview App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+I wanted to implement this task like it's part of real complex app, so I decided to use few libraries I would probably choose in project like that:
+- React-Query for async state management and (pre)caching data
+- FlashList for performance improvements and out of the box support for masonry layout
+- expo-image for performance improvements and images disk-caching
+- axios to quickly create wrapper over unsplash api
 
-## Get started
+### Features to highlight
+- image details are pre-cached when navigating from list, which allows to render data immediately on details page
+- image in details page uses thumbnail size version as a placeholder, which gives pretty smooth experience when loading full size image
 
-1. Install dependencies
-
-   ```bash
-   npm install
-   ```
-
-2. Start the app
-
-   ```bash
-    npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+### Things to improve if I had more time
+- Shared Element Transition on image when navigating from list to details
+- Some placeholder grid UI for search loading state
+- FlashList masonry layout optimisation so items are rendered in order reducing height differences at the list bottom
