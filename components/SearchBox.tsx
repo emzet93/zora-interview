@@ -17,16 +17,18 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import { Text } from "@/components/Text";
+import { useRef } from "react";
 
 interface SearchBoxProps extends TextInputProps {
   value: string;
   setValue: (v: string) => void;
 }
 
-const cancelButtonWidth = 54;
+const cancelButtonWidth = 60;
 
 export function SearchBox({ value, setValue, ...inputProps }: SearchBoxProps) {
   const safeAreaInsets = useSafeAreaInsets();
+  const inputRef = useRef<TextInput | null>(null);
   const isFocused = useSharedValue(false);
 
   const cancelButtonStyle = useAnimatedStyle(
@@ -40,13 +42,17 @@ export function SearchBox({ value, setValue, ...inputProps }: SearchBoxProps) {
 
   return (
     <View style={[styles.container, { paddingTop: safeAreaInsets.top }]}>
-      <View style={styles.inputWrapper}>
+      <Pressable
+        style={styles.inputWrapper}
+        onPress={() => inputRef.current?.focus()}
+      >
         <Feather
           name="search"
           size={theme.spacing.s}
           color={theme.colors.textPlaceholder}
         />
         <TextInput
+          ref={inputRef}
           value={value}
           onChangeText={setValue}
           placeholder="Search"
@@ -67,7 +73,7 @@ export function SearchBox({ value, setValue, ...inputProps }: SearchBoxProps) {
             </Pressable>
           </Animated.View>
         )}
-      </View>
+      </Pressable>
       <Animated.View style={[styles.cancelButtonContainer, cancelButtonStyle]}>
         <Pressable
           style={styles.cancelButton}
@@ -76,7 +82,7 @@ export function SearchBox({ value, setValue, ...inputProps }: SearchBoxProps) {
             Keyboard.dismiss();
           }}
         >
-          <Text weight="bold" size="xs" align="right" numberOfLines={1}>
+          <Text weight="bold" size="s" align="right" numberOfLines={1}>
             Cancel
           </Text>
         </Pressable>
@@ -104,6 +110,7 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     color: theme.colors.text,
+    fontSize: theme.font.s,
   },
   cancelButtonContainer: {
     width: cancelButtonWidth,
