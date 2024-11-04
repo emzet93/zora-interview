@@ -1,5 +1,6 @@
 import {
   ActivityIndicator,
+  Dimensions,
   KeyboardAvoidingView,
   RefreshControl,
   StyleSheet,
@@ -64,7 +65,6 @@ export default function Search() {
               return (
                 <MasonryFlashList
                   data={flatData}
-                  estimatedItemSize={100}
                   showsVerticalScrollIndicator={false}
                   onEndReached={fetchNextPage}
                   refreshControl={
@@ -89,6 +89,14 @@ export default function Search() {
                     <ImageThumbnail image={image} />
                   )}
                   keyboardDismissMode={"on-drag"}
+                  estimatedItemSize={100}
+                  optimizeItemArrangement
+                  overrideItemLayout={(layout, item) => {
+                    const scaledWidth = Dimensions.get("window").width / 3;
+                    const scaledHeight =
+                      (scaledWidth * item.height) / item.width;
+                    layout.size = scaledHeight;
+                  }}
                 />
               );
             }
